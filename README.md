@@ -1,4 +1,4 @@
-AniQ
+The AniQ Search Engine
 ====
 
 AniQ is a category-driven search engine system for structured data developed by Anicloud Limited. The system provides an portal service for indexing the structured information of different categories. AniQ is consisted by a 4-layer query utilities stack(top-down approach):
