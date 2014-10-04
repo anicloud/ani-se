@@ -1,4 +1,4 @@
-aniq
+AniQ
 ====
 
-Anicloud Clustering Search Engine Project
+AniQ is the Clustering Search Engine Project of Anicloud Limited.
