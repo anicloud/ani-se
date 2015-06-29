@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/elasticsearch
+       http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd
+	   http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <elasticsearch:repositories base-package="com.ani.se.es.repository" />
+
+    <elasticsearch:transport-client id="esClient"
+                                    cluster-name="anicloud"
+                                    cluster-nodes="192.168.1.101:9300"
+                                    client-transport-sniff="true"
+                                    client-transport-ignore-cluster-name="false"
+                                    client-transport-ping-timeout="5s"
+                                    client-transport-nodes-sampler-interval="5s" />
+
+    <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="esClient"/>
+    </bean>
+</beans>
