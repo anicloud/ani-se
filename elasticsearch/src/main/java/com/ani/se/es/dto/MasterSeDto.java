@@ -21,7 +21,12 @@ public class MasterSeDto {
 
     public List<SlaveSeDto> slaves = new ArrayList<SlaveSeDto>();
 
-    public MasterSeDto(MasterEntity masterEntity, List<SlaveEntity> slaveEntities) throws Exception {
+    public boolean removed = false;
+
+    public MasterSeDto() {
+    }
+
+    public MasterSeDto(MasterEntity masterEntity, List<SlaveEntity> slaveEntities) {
         deviceId = masterEntity.deviceId;
         name = masterEntity.name;
         description = masterEntity.description;
@@ -35,7 +40,7 @@ public class MasterSeDto {
         }
     }
 
-    public void fromEntity(MasterEntity masterEntity, List<SlaveEntity> slaveEntities) throws Exception {
+    public void fromEntity(MasterEntity masterEntity, List<SlaveEntity> slaveEntities) {
         deviceId = masterEntity.deviceId;
         name = masterEntity.name;
         description = masterEntity.description;
@@ -49,7 +54,7 @@ public class MasterSeDto {
         }
     }
 
-    public MasterEntity toMasterEntity() throws Exception {
+    public MasterEntity toMasterEntity() {
         MasterEntity entity = new MasterEntity();
         entity.deviceId = deviceId;
         entity.name = name;
@@ -59,7 +64,7 @@ public class MasterSeDto {
         return entity;
     }
 
-    public List<SlaveEntity> toSlaveEntity() throws Exception {
+    public List<SlaveEntity> toSlaveEntityList() {
         List<SlaveEntity> slaveEntities = new ArrayList<SlaveEntity>();
         for (SlaveSeDto slaveSeDto : slaves) {
             slaveEntities.add(slaveSeDto.toEntity());

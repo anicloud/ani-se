@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/context/app.xml")
+@ContextConfiguration("classpath:/test/testApp.xml")
 public class SearchServiceTest {
     private static final Logger log = LoggerFactory.getLogger(SearchServiceTest.class);
     @Resource
@@ -42,7 +42,7 @@ public class SearchServiceTest {
 
     @Test
     public void testSearchDevice() throws Exception {
-        List<MasterSeDto> masterSeDtoList = searchServiceImpl.searchDevice("智能");
+        List<MasterSeDto> masterSeDtoList = searchServiceImpl.searchDevice("air light");
         for (MasterSeDto masterSeDto : masterSeDtoList) {
             log.info(masterSeDto.toString());
         }

@@ -9,7 +9,6 @@
 
     <context:component-scan base-package="com.ani.se.es.service" />
 
-    <import resource="classpath:/context/es.xml" />
-    <import resource="classpath:/context/jms.xml" />
+    <import resource="classpath:/test/es.xml" />
 
 </beans>

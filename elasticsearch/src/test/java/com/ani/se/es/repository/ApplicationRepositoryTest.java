@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  * Created by huangbin on 6/22/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/context/app.xml")
+@ContextConfiguration("classpath:/test/testApp.xml")
 public class ApplicationRepositoryTest {
     private static final Logger log = LoggerFactory.getLogger(ApplicationRepositoryTest.class);
     @Resource

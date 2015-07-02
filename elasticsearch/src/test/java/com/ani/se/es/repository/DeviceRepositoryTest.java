@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Created by huangbin on 6/22/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/context/app.xml")
+@ContextConfiguration("classpath:/test/testApp.xml")
 public class DeviceRepositoryTest {
     private static final Logger log = LoggerFactory.getLogger(DeviceRepositoryTest.class);
     @Resource

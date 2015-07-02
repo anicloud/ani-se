@@ -17,7 +17,10 @@ public class SlaveSeDto {
     public String description;
     public String physicalId;
 
-    public SlaveSeDto(SlaveEntity slaveEntity) throws Exception {
+    public SlaveSeDto() {
+    }
+
+    public SlaveSeDto(SlaveEntity slaveEntity) {
         masterId = slaveEntity.masterId;
         deviceId = slaveEntity.deviceId;
         description = slaveEntity.description;
@@ -25,7 +28,7 @@ public class SlaveSeDto {
         physicalId = slaveEntity.physicalId;
     }
 
-    public void fromEntity(SlaveEntity slaveEntity) throws Exception {
+    public void fromEntity(SlaveEntity slaveEntity) {
         masterId = slaveEntity.masterId;
         deviceId = slaveEntity.deviceId;
         description = slaveEntity.description;
@@ -33,7 +36,7 @@ public class SlaveSeDto {
         physicalId = slaveEntity.physicalId;
     }
 
-    public SlaveEntity toEntity() throws Exception {
+    public SlaveEntity toEntity() {
         SlaveEntity entity = new SlaveEntity();
         entity.id = masterId + deviceId;
         entity.masterId = masterId;

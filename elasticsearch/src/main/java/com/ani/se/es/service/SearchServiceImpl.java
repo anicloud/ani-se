@@ -1,20 +1,15 @@
 package com.ani.se.es.service;
 
 import com.ani.se.es.dto.ApplicationSeDto;
-import com.ani.se.es.dto.BasicSeDto;
 import com.ani.se.es.dto.MasterSeDto;
 import com.ani.se.es.dto.SlaveSeDto;
 import com.ani.se.es.entity.ApplicationEntity;
-import com.ani.se.es.entity.BasicSeEntity;
 import com.ani.se.es.entity.MasterEntity;
 import com.ani.se.es.entity.SlaveEntity;
 import com.ani.se.es.repository.ApplicationRepository;
 import com.ani.se.es.repository.MasterRepository;
 import com.ani.se.es.repository.SlaveRepository;
-import org.apache.lucene.queryparser.flexible.core.builders.QueryBuilder;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Component;
@@ -25,8 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-import static org.elasticsearch.index.query.QueryBuilders.hasChildQuery;
 import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 /**
@@ -52,11 +45,16 @@ public class SearchServiceImpl implements SearchService {
     }
 
     public void updateIndexDevice(MasterSeDto dto) throws Exception {
-        MasterEntity masterEntity = dto.toMasterEntity();
-        List<SlaveEntity> slaveEntities = dto.toSlaveEntity();
-        masterRepository.index(masterEntity);
-        for (SlaveEntity slaveEntity : slaveEntities) {
-            slaveRepository.index(slaveEntity);
+        if (dto.removed == true) {
+            removeIndexDevice(dto);
+        } else {
+            slaveRepository.removeByMasterId(dto.deviceId);
+            MasterEntity masterEntity = dto.toMasterEntity();
+            List<SlaveEntity> slaveEntities = dto.toSlaveEntityList();
+            masterRepository.index(masterEntity);
+            for (SlaveEntity slaveEntity : slaveEntities) {
+                slaveRepository.index(slaveEntity);
+            }
         }
     }
 
@@ -66,16 +64,19 @@ public class SearchServiceImpl implements SearchService {
     }
 
     public void removeIndexDevice(MasterSeDto dto) throws Exception {
-        MasterEntity masterEntity = dto.toMasterEntity();
-        List<SlaveEntity> slaveEntities = dto.toSlaveEntity();
-        for (SlaveEntity slaveEntity : slaveEntities) {
-            slaveRepository.delete(slaveEntity);
-        }
-        masterRepository.delete(masterEntity);
+//        MasterEntity masterEntity = dto.toMasterEntity();
+//        List<SlaveEntity> slaveEntities = dto.toSlaveEntityList();
+//        for (SlaveEntity slaveEntity : slaveEntities) {
+//            slaveRepository.delete(slaveEntity);
+//        }
+//        masterRepository.delete(masterEntity);
+
+        slaveRepository.removeByMasterId(dto.deviceId);
+        masterRepository.delete(dto.deviceId);
     }
 
     public void removeIndexApplication(ApplicationSeDto dto) throws Exception {
-        applicationRepository.delete(dto.toEntity());
+        applicationRepository.delete(dto.clientId);
     }
 
     public List<MasterSeDto> searchDevice(String query) throws Exception {
