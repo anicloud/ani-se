@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jms
+       http://www.springframework.org/schema/jms/spring-jms.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://activemq.apache.org/schema/core
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <context:property-placeholder location="classpath:/properties/jms.properties" ignore-unresolvable="true" order="1"/>
+
+    <amq:connectionFactory id="deviceTargetConnectionFactory"
+                           brokerURL="tcp://${jms.broker.device.url}:${jms.broker.device.port}" />
+
+    <bean id="deviceConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="deviceTargetConnectionFactory" />
+        <property name="clientId" value="${jms.device.clientId}"/>
+    </bean>
+
+    <bean id="deviceServiceJms" class="com.ani.se.on.service.DeviceServiceJms" />
+
+    <jms:listener-container connection-factory="deviceConnectionFactory" destination-type="durableTopic">
+        <jms:listener destination="${jms.device.destination}"
+                      ref="deviceServiceJms"
+                      method="processDeviceUpdate"/>
+    </jms:listener-container>
+        
+
+</beans>
