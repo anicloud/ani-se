@@ -24,7 +24,7 @@ import java.util.List;
 public class SearchServiceTest {
     private static final Logger log = LoggerFactory.getLogger(SearchServiceTest.class);
     @Resource
-    SearchServiceImpl searchServiceImpl;
+    SearchService searchServiceClient;
 
     @Before
     public void setUp() throws Exception {
@@ -38,7 +38,7 @@ public class SearchServiceTest {
 
     @Test
     public void testSearchDevice() throws Exception {
-        List<MasterSeDto> masterSeDtoList = searchServiceImpl.searchDevice("air light");
+        List<MasterSeDto> masterSeDtoList = searchServiceClient.searchDevice("air light");
         for (MasterSeDto masterSeDto : masterSeDtoList) {
             log.info(masterSeDto.toString());
         }
@@ -46,7 +46,7 @@ public class SearchServiceTest {
 
     @Test
     public void testSearchApp() throws Exception {
-        List<ApplicationSeDto> slaveSeDtoList = searchServiceImpl.searchApplication("智能");
+        List<ApplicationSeDto> slaveSeDtoList = searchServiceClient.searchApplication("智能");
         for (ApplicationSeDto applicationSeDto : slaveSeDtoList) {
             log.info(applicationSeDto.toString());
         }

@@ -25,7 +25,7 @@ import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 /**
  * Created by huangbin on 6/22/15.
  */
-@Component
+@Component("searchService")
 public class SearchServiceImpl implements SearchService {
 
     @Resource

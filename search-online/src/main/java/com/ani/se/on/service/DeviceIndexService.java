@@ -5,6 +5,7 @@ import com.ani.cel.device.manager.core.domain.device.DeviceMaster;
 import com.ani.cel.device.manager.core.domain.device.DeviceSlave;
 import com.ani.se.on.dto.MasterSeDto;
 import com.ani.se.on.dto.SlaveSeDto;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -13,9 +14,10 @@ import java.util.List;
 /**
  * Created by huangbin on 7/2/15.
  */
-public class DeviceServiceJms {
+@Component("deviceIndexService")
+public class DeviceIndexService {
     @Resource
-    SearchServiceImpl searchServiceImpl;
+    SearchService searchService;
 
     private SlaveSeDto convertToSlaveSeDto(String masterId, DeviceSlave deviceSlave) {
         if (masterId == null || deviceSlave == null) {
@@ -54,9 +56,9 @@ public class DeviceServiceJms {
         return masterSeDto;
     }
 
-    public void processDeviceUpdate(DeviceMaster deviceMaster) {
+    public void updateDeviceIndex(DeviceMaster deviceMaster) {
         try {
-            searchServiceImpl.updateIndexDevice(convertToMasterSeDto(deviceMaster));
+            searchService.updateIndexDevice(convertToMasterSeDto(deviceMaster));
         } catch (Exception e) {
             e.printStackTrace();
         }

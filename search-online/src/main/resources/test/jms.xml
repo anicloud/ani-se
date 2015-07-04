@@ -25,26 +25,13 @@
         <property name="clientId" value="${jms.clientId}"/>
     </bean>
 
-    <!-- Device service client-->
-    <jms:listener-container connection-factory="jmsConnectionFactory" destination-type="durableTopic">
-        <jms:listener destination="${jms.device.destination}"
-                      ref="deviceIndexService"
-                      method="updateDeviceIndex"/>
-    </jms:listener-container>
-
-
     <!-- Search service server-->
 
-    <bean id="searchServiceExporter"
-          class="org.springframework.jms.remoting.JmsInvokerServiceExporter">
-        <property name="service" ref="searchService" />
+    <bean id="searchServiceClient"
+          class="org.springframework.jms.remoting.JmsInvokerProxyFactoryBean">
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+        <property name="queueName" value="${jms.search.on.destination}" />
         <property name="serviceInterface" value="com.ani.se.on.service.SearchService" />
     </bean>
-    <jms:listener-container connection-factory="jmsConnectionFactory" >
-        <jms:listener destination="${jms.search.on.destination}"
-                      ref="searchServiceExporter" />
-    </jms:listener-container>
-
-        
 
 </beans>
