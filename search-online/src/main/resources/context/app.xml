@@ -11,5 +11,6 @@
 
     <import resource="classpath:/context/es.xml" />
     <import resource="classpath:/context/jms.xml" />
+    <import resource="classpath:/context/servlet-context.xml" />
 
 </beans>

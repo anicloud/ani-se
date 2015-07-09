@@ -34,7 +34,7 @@ public class DeviceRepositoryTest {
     @Before
     public void setUp() throws Exception {
         String indexName = "anicloud";
-        elasticsearchTemplate.deleteIndex(indexName);
+//        elasticsearchTemplate.deleteIndex(indexName);
         if (!elasticsearchTemplate.indexExists(indexName)) {
             elasticsearchTemplate.createIndex(indexName);
         }
