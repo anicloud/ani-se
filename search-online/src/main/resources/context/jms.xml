@@ -27,21 +27,20 @@
 
     <!-- Device service client-->
     <jms:listener-container connection-factory="jmsConnectionFactory" destination-type="durableTopic">
-        <jms:listener destination="${jms.device.destination}"
+        <jms:listener destination="${jms.cel.device.destination}.meta"
                       ref="deviceIndexService"
                       method="updateDeviceIndex"/>
     </jms:listener-container>
 
 
     <!-- Search service server-->
-
     <bean id="searchServiceExporter"
           class="org.springframework.jms.remoting.JmsInvokerServiceExporter">
         <property name="service" ref="searchService" />
         <property name="serviceInterface" value="com.ani.se.on.service.SearchService" />
     </bean>
     <jms:listener-container connection-factory="jmsConnectionFactory" >
-        <jms:listener destination="${jms.search.on.destination}"
+        <jms:listener destination="${jms.search.on.destination}.search"
                       ref="searchServiceExporter" />
     </jms:listener-container>
 
